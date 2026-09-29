@@ -1,0 +1,12 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Evita que aparezcan barras de desplazamiento */
+  background-color: #040516; /* Color de fondo base del juego */
+  width: 100%;
+  height: 100%;
+}
+
+canvas {
+  display: block;
+}
