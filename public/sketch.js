@@ -994,6 +994,9 @@ function updatePlayer(dt) {
     height + 220
   ) {
 
+    // Quitamos la invulnerabilidad para forzar que el jugador pierda la vida
+    // y reaparezca correctamente, evitando que caiga infinitamente.
+    player.invulnerable = 0; 
     loseLife();
 
     return;
