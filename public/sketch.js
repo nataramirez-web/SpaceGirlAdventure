@@ -52,6 +52,8 @@ const FLIGHT_DURATION = 480;
 
 let levelGemAwarded = false;
 
+let highScores = [];
+
 
 // ============================================================
 // COLORES
@@ -1483,6 +1485,8 @@ function loseLife() {
 
     gameState =
       "gameover";
+      
+    updateHighScores(score);
 
     return;
   }
@@ -1628,6 +1632,8 @@ function checkPortal() {
 
       gameState =
         "victory";
+        
+      updateHighScores(score);
     }
   }
 }
@@ -6591,6 +6597,28 @@ function drawEndScreen() {
     height / 2 + 35
   );
 
+  // Tablero de Puntuaciones
+  fill(
+    100,
+    230,
+    255
+  );
+  textSize(18);
+  text(
+    "TOP 3 PUNTAJES",
+    width / 2,
+    height / 2 + 75
+  );
+  
+  fill(255);
+  textSize(16);
+  for (let i = 0; i < highScores.length; i++) {
+    text(
+      (i+1) + "º   -   " + highScores[i] + " PTS", 
+      width / 2, 
+      height / 2 + 100 + (i * 22)
+    );
+  }
 
   fill(
     190,
@@ -6603,7 +6631,7 @@ function drawEndScreen() {
   text(
     "Toca la pantalla o presiona R para reiniciar",
     width / 2,
-    height / 2 + 80
+    height / 2 + 185
   );
 
 
@@ -6673,6 +6701,18 @@ function restartGame() {
   startLevel(1);
 }
 
+// ============================================================
+// HIGHSCORES
+// ============================================================
+
+function updateHighScores(currentScore) {
+  let scores = JSON.parse(localStorage.getItem("spaceGirlHighScores")) || [];
+  scores.push(currentScore);
+  scores.sort((a, b) => b - a);
+  scores = [...new Set(scores)].slice(0, 3);
+  localStorage.setItem("spaceGirlHighScores", JSON.stringify(scores));
+  highScores = scores;
+}
 
 // ============================================================
 // CAMBIO DE TAMAÑO
