@@ -6598,7 +6598,7 @@ function drawEndScreen() {
   textSize(16);
 
   text(
-    "Presiona R para comenzar nuevamente",
+    "Toca la pantalla o presiona R para reiniciar",
     width / 2,
     height / 2 + 80
   );
@@ -6630,6 +6630,16 @@ function keyPressed() {
     key === "R"
   ) {
 
+    restartGame();
+  }
+}
+
+// ============================================================
+// MOUSE / TÁCTIL (REINICIAR)
+// ============================================================
+
+function mousePressed() {
+  if (gameState === "gameover" || gameState === "victory") {
     restartGame();
   }
 }
