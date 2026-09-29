@@ -22,6 +22,11 @@ let cameraY = 0;
 
 let player;
 
+// Controles táctiles
+let touchLeft = false;
+let touchRight = false;
+let touchJump = false;
+
 let platforms = [];
 let cloudStations = [];
 let enemies = [];
@@ -86,6 +91,8 @@ function setup() {
   createBackgroundStars();
 
   startLevel(1);
+
+  setupTouchControls();
 
   lastTime = millis();
 }
@@ -778,11 +785,11 @@ function updatePlayer(dt) {
 
   let left =
     keyIsDown(LEFT_ARROW) ||
-    keyIsDown(65);
+    keyIsDown(65) || touchLeft;
 
   let right =
     keyIsDown(RIGHT_ARROW) ||
-    keyIsDown(68);
+    keyIsDown(68) || touchRight;
 
 
   // ----------------------------------------------------------
@@ -847,7 +854,7 @@ function updatePlayer(dt) {
       gravity * 0.55 * dt;
 
 
-    if (keyIsDown(32)) {
+    if (keyIsDown(32) || touchJump) {
 
       player.vy -=
         0.23 * dt;
@@ -4501,7 +4508,7 @@ function drawPlayer() {
 
   if (
     flightTimer > 0 &&
-    keyIsDown(32)
+    (keyIsDown(32) || touchJump)
   ) {
 
     drawJetFlames();
@@ -6666,4 +6673,41 @@ function windowResized() {
   );
 
   createBackgroundStars();
+}
+
+// ============================================================
+// CONTROLES TÁCTILES
+// ============================================================
+
+function setupTouchControls() {
+  const btnLeft = document.getElementById('btn-left');
+  const btnRight = document.getElementById('btn-right');
+  const btnJump = document.getElementById('btn-jump');
+
+  if (!btnLeft || !btnRight || !btnJump) return;
+
+  btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); touchLeft = true; });
+  btnLeft.addEventListener('touchend', (e) => { e.preventDefault(); touchLeft = false; });
+  btnLeft.addEventListener('mousedown', (e) => { touchLeft = true; });
+  btnLeft.addEventListener('mouseup', (e) => { touchLeft = false; });
+  btnLeft.addEventListener('mouseleave', (e) => { touchLeft = false; });
+
+  btnRight.addEventListener('touchstart', (e) => { e.preventDefault(); touchRight = true; });
+  btnRight.addEventListener('touchend', (e) => { e.preventDefault(); touchRight = false; });
+  btnRight.addEventListener('mousedown', (e) => { touchRight = true; });
+  btnRight.addEventListener('mouseup', (e) => { touchRight = false; });
+  btnRight.addEventListener('mouseleave', (e) => { touchRight = false; });
+
+  btnJump.addEventListener('touchstart', (e) => { 
+    e.preventDefault(); 
+    touchJump = true; 
+    jumpPlayer(); 
+  });
+  btnJump.addEventListener('touchend', (e) => { e.preventDefault(); touchJump = false; });
+  btnJump.addEventListener('mousedown', (e) => { 
+    touchJump = true; 
+    jumpPlayer(); 
+  });
+  btnJump.addEventListener('mouseup', (e) => { touchJump = false; });
+  btnJump.addEventListener('mouseleave', (e) => { touchJump = false; });
 }

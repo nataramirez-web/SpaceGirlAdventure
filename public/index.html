@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Space Girl Adventure</title>
   <link rel="stylesheet" href="style.css">
   <!-- Librería p5.js -->
@@ -11,6 +11,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
+  <!-- Controles táctiles -->
+  <div id="mobile-controls">
+    <div class="left-right-group">
+      <div id="btn-left" class="control-btn">◀</div>
+      <div id="btn-right" class="control-btn">▶</div>
+    </div>
+    <div id="btn-jump" class="control-btn">▲</div>
+  </div>
   <!-- Tu código del juego -->
   <script src="sketch.js"></script>
 </body>
